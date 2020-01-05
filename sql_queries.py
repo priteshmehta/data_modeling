@@ -10,7 +10,7 @@ time_table_drop = "DROP TABLE IF EXISTS time CASCADE"
 
 songplay_table_create = (""" 
 CREATE TABLE IF NOT EXISTS songplays(
-songplay_id VARCHAR(18) PRIMARY KEY NOT NULL,
+songplay_id SERIAL PRIMARY KEY NOT NULL,
 start_time TIME,
 user_id VARCHAR(18) REFERENCES users(user_id),
 level VARCHAR(10),
@@ -60,9 +60,9 @@ weekday SMALLINT)
 """)
 
 # INSERT RECORDS
-
+#
 songplay_table_insert = ("""
-INSERT INTO songplays(songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s) 
+INSERT INTO songplays(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) 
 """)
 
 user_table_insert = ("""
@@ -88,6 +88,5 @@ SELECT songs.song_id, songs.artist_id FROM songs, artists WHERE songs.song_id = 
 """)
 
 # QUERY LISTS
-
 create_table_queries = [user_table_create, artist_table_create, song_table_create, songplay_table_create, time_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
