@@ -4,13 +4,14 @@ Data Engineering Project: Big Data modeling using postgreSQL
 
 ## prerequisite
 
-PostgreSQL
-Python 3.6 or higher
+* PostgreSQL
+* Python 3.6 or higher
 
 
 ## Dependencies
+```
 pip install -r requirements.txt
-
+```
 
 ## DB Setup
 ```
