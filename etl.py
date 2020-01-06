@@ -7,7 +7,6 @@ from sql_queries import *
 
 def process_song_file(cur, filepath):
     # open song file
-    # /Users/pmehta/mygithub/data_engg/data/song_data/a/A/TRAAAAW128F429D538.json
     ser = pd.read_json(filepath, typ='series')
     df = ser.to_frame('count')
     
@@ -55,8 +54,9 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        results = cur.execute(song_select, (row.song))
-        songid, artistid = results if results else None, None
+        cur.execute(song_select, (row.song,))
+        results = cur.fetchone()
+        songid, artistid = results if results else (None, None)
 
         # insert songplay record
         songplay_data = (row.start_time, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
@@ -91,9 +91,14 @@ def main():
     else:
         conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user))
     cur = conn.cursor()
-
+    # Song files
     try:
         process_data(cur, conn, filepath='data/song_data', func=process_song_file)
+    except Exception as e:
+        print(e)
+    
+    # Log files
+    try:
         process_data(cur, conn, filepath='data/log_data', func=process_log_file)
     except Exception as e:
         print(e)
