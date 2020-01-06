@@ -89,7 +89,7 @@ def main():
     if db_pass:
         conn = psycopg2.connect("host={} dbname=sparkifydb user={}, password={}".format(db_server, db_user, db_pass))
     else:
-        conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user, db_pass))
+        conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user))
     cur = conn.cursor()
 
     try:

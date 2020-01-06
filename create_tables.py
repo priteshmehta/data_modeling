@@ -7,9 +7,12 @@ def create_database():
     # connect to default database
     db_server = os.getenv("DB_SERVER", "127.0.0.1")
     db_user = os.getenv("DB_USER", None)
-    #db_pass = os.getenv("DB_PASSORD", None)
+    db_pass = os.getenv("DB_PASSORD", None)
     try:
-        conn = psycopg2.connect("host={} dbname=postgres user={}".format(db_server, db_user))
+        if db_pass:
+            conn = psycopg2.connect("host={} dbname=sparkifydb user={}, password={}".format(db_server, db_user, db_pass))
+        else:
+            conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user))
         conn.set_session(autocommit=True)
         cur = conn.cursor()
     except (Exception, psycopg2.DatabaseError) as error:
@@ -25,11 +28,14 @@ def create_database():
     
     # connect to sparkify database
     try:
-        conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user))
+        if db_pass:
+            conn = psycopg2.connect("host={} dbname=sparkifydb user={} password={}".format(db_server, db_user, db_pass))
+        else:
+            conn = psycopg2.connect("host={} dbname=sparkifydb user={}".format(db_server, db_user))
         cur = conn.cursor()
         return cur, conn
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+    except (Exception, psycopg2.DatabaseError) as e:
+        print(e)
 
 def drop_tables(cur, conn):
     for query in drop_table_queries:
@@ -41,7 +47,6 @@ def create_tables(cur, conn):
     for query in create_table_queries:
         cur.execute(query)
         conn.commit()
-
 
 def main():
     cur, conn = create_database()
