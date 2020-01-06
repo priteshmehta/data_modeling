@@ -10,9 +10,9 @@ def create_database():
     db_pass = os.getenv("DB_PASSORD", None)
     try:
         if db_pass:
-            conn = psycopg2.connect("host={} dbname=postgres user={}, password={}".format(db_server, db_user, db_pass))
+            conn = psycopg2.connect("host={} dbname=studentdb user={}, password={}".format(db_server, db_user, db_pass))
         else:
-            conn = psycopg2.connect("host={} dbname=postgres user={}".format(db_server, db_user))
+            conn = psycopg2.connect("host={} dbname=studentdb user={}".format(db_server, db_user))
         conn.set_session(autocommit=True)
         cur = conn.cursor()
     except (Exception, psycopg2.DatabaseError) as error:
