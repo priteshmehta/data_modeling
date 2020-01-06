@@ -55,7 +55,7 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        results = cur.execute(song_select, (row.song, row.artist))
+        results = cur.execute(song_select, (row.song))
         songid, artistid = results if results else None, None
 
         # insert songplay record

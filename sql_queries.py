@@ -84,7 +84,7 @@ INSERT INTO time(start_time, hour, day, week, month, year, weekday) VALUES(%s, %
 
 # FIND SONGS
 song_select = ("""
-SELECT songs.song_id, songs.artist_id FROM songs, artists WHERE songs.song_id = artists.artist_id and songs.title = %s AND artists.name = %s
+SELECT songs.song_id, songs.artist_id FROM songs, artists WHERE songs.artist_id = artists.artist_id and songs.title = %s
 """)
 
 # QUERY LISTS
