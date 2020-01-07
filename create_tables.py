@@ -17,7 +17,7 @@ def create_database():
         cur = conn.cursor()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-    
+
     # create sparkify database with UTF8 encoding
     cur.execute("DROP DATABASE IF EXISTS sparkifydb")
     cur.execute("CREATE DATABASE sparkifydb WITH ENCODING 'utf8' TEMPLATE template0")
@@ -25,7 +25,7 @@ def create_database():
     # close connection to default database
     if conn is not None:
         conn.close()
-    
+
     # connect to sparkify database
     try:
         if db_pass:
